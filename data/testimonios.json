@@ -1,6 +1,7 @@
 {
   "testimonios": [
-    { "texto": "El mejor ❤️", "nombre": "@kemberly1135", "detalle": "Comentario en Instagram, 17 oct 2026" },
-    { "texto": "Excelente ❤️", "nombre": "@kemberly1135", "detalle": "Comentario en Instagram, 8 oct 2026" }
+    { "texto": "Llegué con la espalda hecha un nudo y salí liviana. Muy buena atención y el lugar es súper tranquilo. (ejemplo)", "nombre": "Camila R. (ejemplo)", "detalle": "Masaje descontracturante (ejemplo)" },
+    { "texto": "Reservé por WhatsApp y me respondieron al tiro. El masaje de relajación estuvo excelente, volveré. (ejemplo)", "nombre": "Felipe M. (ejemplo)", "detalle": "Masaje de relajación (ejemplo)" },
+    { "texto": "Lo pedí a domicilio y fue puntual y muy profesional. Lo recomiendo totalmente. (ejemplo)", "nombre": "Daniela P. (ejemplo)", "detalle": "Masaje a domicilio (ejemplo)" }
   ]
 }
