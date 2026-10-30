@@ -24,6 +24,7 @@
       </a>
       <nav class="nav__links" id="menu" aria-label="Principal">
         <a href="#carta">Masajes</a>
+        <a href="#opiniones">Opiniones</a>
         <!-- SI:PASOS --><a href="#sesion">Cómo funciona</a><!-- /SI:PASOS -->
         <a href="#contacto">Ubicación</a>
       </nav>
@@ -37,13 +38,8 @@
     <section class="hero" id="inicio">
       <div class="wrap hero__in">
         <div class="hero__copy">
-          <h1 class="hero__title"><span class="l1">%%HERO_TITULO%%</span> <span class="l2">%%HERO_DESTACADO%%</span></h1>
+          <h1 class="hero__title">Masajes en Santiago Centro y a domicilio</h1>
           <p class="hero__lead">%%HERO_BAJADA%%</p>
-          <dl class="facts">
-            <!-- SI:PRECIO_DESDE --><div><dt>Desde</dt><dd>%%PRECIO_DESDE%%</dd></div><!-- /SI:PRECIO_DESDE -->
-            <!-- SI:DURACION_DESDE --><div><dt>Sesión</dt><dd>%%DURACION_DESDE%%</dd></div><!-- /SI:DURACION_DESDE -->
-            <div><dt>Atención</dt><dd>En cabina y a domicilio</dd></div>
-          </dl>
         </div>
         <figure class="hero__photo">
           <img src="%%HERO_FOTO%%" alt="Jonny Carrero frente al letrero de su cabina de masajes" width="640" height="1412" fetchpriority="high">
@@ -91,9 +87,26 @@
       </div>
     </section>
 
+    <!-- ================= OPINIONES ================= -->
+    <section class="section section--alt" id="opiniones">
+      <div class="wrap">
+        <header class="sec-head">
+          <h2>Opiniones de clientes</h2>
+          <p>Lo que dicen quienes ya se atendieron con Jonny.</p>
+        </header>
+        <!-- SI:TESTIMONIOS --><div class="quotes"><!-- TESTIMONIOS --></div><!-- /SI:TESTIMONIOS -->
+        <!-- SI:SIN_TESTIMONIOS -->
+        <div class="vacio">
+          <p>Estamos reuniendo las primeras opiniones. Mientras tanto, puedes ver el trabajo y los comentarios en Instagram.</p>
+          <a class="btn btn--dark" href="https://www.instagram.com/%%INSTAGRAM%%/" target="_blank" rel="noopener">Ver Instagram</a>
+        </div>
+        <!-- /SI:SIN_TESTIMONIOS -->
+      </div>
+    </section>
+
     <!-- ================= CÓMO FUNCIONA ================= -->
     <!-- SI:PASOS -->
-    <section class="section section--alt" id="sesion">
+    <section class="section" id="sesion">
       <div class="wrap">
         <header class="sec-head">
           <h2>%%PASOS_TITULO%%</h2>
@@ -103,16 +116,6 @@
       </div>
     </section>
     <!-- /SI:PASOS -->
-
-    <!-- ================= OPINIONES ================= -->
-    <!-- SI:TESTIMONIOS -->
-    <section class="section" id="opiniones">
-      <div class="wrap">
-        <header class="sec-head"><h2>Opiniones de clientes</h2></header>
-        <div class="quotes"><!-- TESTIMONIOS --></div>
-      </div>
-    </section>
-    <!-- /SI:TESTIMONIOS -->
 
     <!-- ================= RESERVAR ================= -->
     <!-- SI:WHATSAPP -->

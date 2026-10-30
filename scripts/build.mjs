@@ -222,7 +222,7 @@ const VARS = {
   SEO_TITULO, SEO_DESCRIPCION,
   CIUDAD: T.ciudad, REGION: T.region, EMAIL: T.email, INSTAGRAM: T.instagram, DIRECCION: T.direccion,
   WHATSAPP: T.whatsapp ? '1' : '', HORARIO: hayHorario ? '1' : '', FLYER: flyerOn ? '1' : '', FLYER_POPUP: flyerOn && flyerData.popup === true ? '1' : '',
-  TESTIMONIOS: testimonios.length ? '1' : '', PASOS: pasos.length ? '1' : '', FILTROS_ON: categorias.length > 1 ? '1' : '',
+  TESTIMONIOS: testimonios.length ? '1' : '', SIN_TESTIMONIOS: testimonios.length ? '' : '1', PASOS: pasos.length ? '1' : '', FILTROS_ON: categorias.length > 1 ? '1' : '',
   WA_LINK: T.whatsapp ? wa(T.mensaje) : '#', WA_NUMERO: waNum,
   MAPA_URL: `https://www.google.com/maps?q=${mapaQuery}&output=embed`,
   COMO_LLEGAR: `https://www.google.com/maps/search/?api=1&query=${mapaQuery}`,
