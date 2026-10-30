@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "jonnymasaje", "runtimeExecutable": "npx", "runtimeArgs": ["--yes", "serve", "dist", "-l", "5611"], "port": 5611 }
+  ]
+}

@@ -1,0 +1,4 @@
+node_modules/
+dist/
+material-cliente/
+.claude/settings.local.json

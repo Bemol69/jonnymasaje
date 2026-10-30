@@ -1,0 +1,10 @@
+{
+  "titulo": "Así es tu sesión",
+  "bajada": "Simple, tranquila y sin apuros.",
+  "pasos": [
+    { "titulo": "Reservas por WhatsApp", "texto": "Me escribes, elegimos el masaje y coordinamos tu hora." },
+    { "titulo": "Llegas o voy a ti", "texto": "En Galería Santiago, piso 8, oficina 809, o a tu domicilio." },
+    { "titulo": "Me cuentas qué sientes", "texto": "Zonas con tensión, molestias o si solo quieres desconectar." },
+    { "titulo": "Descansas", "texto": "Tú te relajas, yo me encargo del resto." }
+  ]
+}

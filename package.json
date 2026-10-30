@@ -1,0 +1,8 @@
+{
+  "name": "jonnycarrero-masajes",
+  "private": true,
+  "description": "Web Jonny Carrero Masajes: sitio estático + panel /admin. El build optimiza las fotos con sharp.",
+  "scripts": { "build": "node scripts/build.mjs" },
+  "engines": { "node": ">=18" },
+  "dependencies": { "sharp": "^0.34.4" }
+}

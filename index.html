@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>%%SEO_TITULO%%</title>
+  <meta name="description" content="%%SEO_DESCRIPCION%%">
+  <meta name="theme-color" content="%%COLOR_TINTA%%">
+  <!-- SEO:HEAD (lo escribe scripts/build.mjs) -->
+  <link rel="icon" href="img/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="%%FUENTES_URL%%">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip" href="#masajes">Ir a los masajes</a>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="#inicio" aria-label="%%NOMBRE%%, inicio">
+        <span class="brand__a">%%MARCA_A%%</span><span class="brand__b">%%MARCA_B%%</span>
+      </a>
+      <nav class="nav__links" id="menu" aria-label="Principal">
+        <a href="#masajes">Masajes</a>
+        <!-- SI:PASOS --><a href="#sesion">Tu sesión</a><!-- /SI:PASOS -->
+        <a href="#sobre">Sobre mí</a>
+        <!-- SI:WHATSAPP --><a href="#reservar">Reservar</a><!-- /SI:WHATSAPP -->
+        <a href="#contacto">Dónde estoy</a>
+      </nav>
+      <!-- SI:WHATSAPP --><a class="btn btn--gold nav__cta" href="%%WA_LINK%%" target="_blank" rel="noopener">Reservar por WhatsApp</a><!-- /SI:WHATSAPP -->
+      <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+    </div>
+    <div class="led led--nav" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="inicio">
+      <div class="wrap hero__in">
+        <div class="hero__copy">
+          <p class="eyebrow" data-reveal>%%HERO_EYEBROW%%</p>
+          <h1 class="hero__title" data-words>%%HERO_TITULO%% <em>%%HERO_DESTACADO%%</em></h1>
+          <p class="hero__lead" data-reveal style="--d:200ms">%%HERO_BAJADA%%</p>
+          <ul class="hero__chips" data-reveal style="--d:280ms">
+            <li><b>Desde $15.000</b> · 25 min</li>
+            <li>Hombres y mujeres</li>
+            <li>También a domicilio</li>
+          </ul>
+          <div class="hero__cta" data-reveal style="--d:360ms">
+            <!-- SI:WHATSAPP --><a class="btn btn--dark" href="%%WA_LINK%%" target="_blank" rel="noopener">Reservar por WhatsApp</a><!-- /SI:WHATSAPP -->
+            <a class="btn btn--line" href="#masajes">Ver los masajes</a>
+          </div>
+          <div class="breath" aria-hidden="true"><i></i><span class="breath__in">Inhala</span><span class="breath__out">Exhala</span></div>
+        </div>
+
+        <div class="hero__art" aria-hidden="false">
+          <figure class="arch arch--main">
+            <img src="%%HERO_FOTO%%" alt="Jonny Carrero frente al letrero de su cabina de masajes" width="640" height="1412" fetchpriority="high">
+          </figure>
+          <figure class="arch arch--cabina">
+            <img src="%%HERO_CABINA%%" alt="Cabina de masajes con luz cálida" width="480" height="635" loading="eager">
+          </figure>
+          <figure class="orb">
+            <img src="%%HERO_PIEDRAS%%" alt="Estuche con piedras calientes para masaje" width="360" height="480" loading="eager">
+          </figure>
+          <div class="stamp"><span>desde</span><strong>$15.000</strong><span>25 minutos</span></div>
+        </div>
+      </div>
+      <div class="led led--hero" aria-hidden="true"></div>
+    </section>
+
+    <div class="marquee" aria-hidden="true"><div class="marquee__track"><!-- MARQUEE --></div></div>
+
+    <!-- ================= MASAJES ================= -->
+    <section class="section section--crema" id="masajes">
+      <div class="wrap">
+        <header class="sec-head" data-reveal>
+          <p class="eyebrow">Masajes</p>
+          <h2>Elige cómo quieres <em>soltar el cuerpo</em></h2>
+          <p class="sec-head__lead">Toca cualquier masaje para ver el detalle. Si no hay precio, escríbeme y te lo cotizo al tiro por WhatsApp.</p>
+        </header>
+        <!-- SI:FILTROS_ON --><div class="chips" role="group" aria-label="Filtrar masajes"><!-- FILTROS --></div><!-- /SI:FILTROS_ON -->
+        <div class="svc-grid" id="svcGrid"><!-- SERVICIOS --></div>
+      </div>
+    </section>
+
+    <!-- ================= TU SESIÓN ================= -->
+    <!-- SI:PASOS -->
+    <section class="section section--papel" id="sesion">
+      <div class="wrap steps">
+        <header class="sec-head" data-reveal>
+          <p class="eyebrow">Paso a paso</p>
+          <h2>%%PASOS_TITULO%%</h2>
+          <p class="sec-head__lead">%%PASOS_BAJADA%%</p>
+        </header>
+        <ol class="steps__list"><!-- PASOS --></ol>
+      </div>
+    </section>
+    <!-- /SI:PASOS -->
+
+    <!-- ================= FRASE ================= -->
+    <section class="quote-band" aria-label="Frase">
+      <div class="led led--top" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="quote-band__big" data-words>%%FRASE%%</p>
+        <p class="quote-band__small" data-reveal>%%FRASE_TEXTO%%</p>
+      </div>
+      <div class="led led--bottom" aria-hidden="true"></div>
+    </section>
+
+    <!-- ================= SOBRE ================= -->
+    <section class="section section--papel" id="sobre">
+      <div class="wrap about">
+        <div class="about__mark" data-reveal>
+          <img src="img/logo.jpg" alt="Logo Jonny Carrero Masajes" width="310" height="310" loading="lazy">
+        </div>
+        <div class="about__copy" data-reveal>
+          <p class="eyebrow">Sobre mí</p>
+          <h2>%%SOBRE_TITULO%%</h2>
+          <p>%%SOBRE_TEXTO%%</p>
+          <ul class="about__list">
+            <li><span class="dot"></span>Masajes de relajación</li>
+            <li><span class="dot"></span>Descarga muscular</li>
+            <li><span class="dot"></span>Reduce el estrés</li>
+            <li><span class="dot"></span>Mejora tu bienestar</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FLYER ================= -->
+    <!-- SI:FLYER -->
+    <section class="section section--crema flyer" id="promo">
+      <div class="wrap flyer__in">
+        <a class="flyer__img" data-reveal href="%%FLYER_WA%%" target="_blank" rel="noopener" aria-label="Reservar: %%FLYER_TITULO%%">
+          <img src="%%FLYER_IMG%%" alt="%%FLYER_TITULO%%" width="640" height="800" loading="lazy">
+        </a>
+        <div class="flyer__copy" data-reveal>
+          <p class="eyebrow">Lo que está vigente</p>
+          <h2>%%FLYER_TITULO%%</h2>
+          <p>%%FLYER_TEXTO%%</p>
+          <a class="btn btn--dark" href="%%FLYER_WA%%" target="_blank" rel="noopener">Quiero reservar</a>
+        </div>
+      </div>
+    </section>
+    <!-- /SI:FLYER -->
+
+    <!-- ================= TESTIMONIOS ================= -->
+    <!-- SI:TESTIMONIOS -->
+    <section class="section section--papel" id="opiniones">
+      <div class="wrap">
+        <header class="sec-head" data-reveal><p class="eyebrow">Opiniones</p><h2>Lo que dicen quienes ya vinieron</h2></header>
+        <div class="quotes"><!-- TESTIMONIOS --></div>
+      </div>
+    </section>
+    <!-- /SI:TESTIMONIOS -->
+
+    <!-- ================= RESERVAR ================= -->
+    <!-- SI:WHATSAPP -->
+    <section class="reserva" id="reservar">
+      <div class="wrap reserva__in">
+        <header class="reserva__head" data-reveal>
+          <p class="eyebrow eyebrow--light">Reserva tu hora</p>
+          <h2>Cuéntame qué necesitas y te <em>respondo por WhatsApp</em></h2>
+          <p>Completa esto y se arma el mensaje solo. Tú lo revisas y lo envías.</p>
+        </header>
+        <form class="form" id="form" novalidate data-reveal>
+          <div class="field">
+            <label for="f-nombre">Tu nombre</label>
+            <input id="f-nombre" name="nombre" type="text" autocomplete="given-name" placeholder="Ej: Camila" required>
+            <small class="err" data-err="nombre">Cuéntame tu nombre para saber a quién responder.</small>
+          </div>
+          <div class="field">
+            <label for="f-masaje">¿Qué masaje te interesa?</label>
+            <select id="f-masaje" name="masaje" required>
+              <option value="">Elige uno…</option>
+              <!-- SELECT_SERVICIOS -->
+              <option>Otro / no estoy seguro</option>
+            </select>
+            <small class="err" data-err="masaje">Elige un masaje (si dudas, «Otro»).</small>
+          </div>
+          <div class="field">
+            <label for="f-modo">¿Dónde lo quieres?</label>
+            <select id="f-modo" name="modo" required>
+              <option value="">Elige…</option>
+              <option>En la cabina (Santiago Centro)</option>
+              <option>A domicilio</option>
+            </select>
+            <small class="err" data-err="modo">Dime si vienes a la cabina o prefieres domicilio.</small>
+          </div>
+          <div class="field" id="f-comuna-wrap" hidden>
+            <label for="f-comuna">Comuna para el domicilio</label>
+            <input id="f-comuna" name="comuna" type="text" placeholder="Ej: Ñuñoa">
+            <small class="err" data-err="comuna">Escribe tu comuna para confirmar si llego.</small>
+          </div>
+          <div class="field">
+            <label for="f-cuando">Día y hora que te acomodan <span class="opt">(opcional)</span></label>
+            <input id="f-cuando" name="cuando" type="text" placeholder="Ej: viernes después de las 18:00">
+          </div>
+          <div class="field field--full">
+            <label for="f-detalle">¿Algo que deba saber? <span class="opt">(opcional)</span></label>
+            <textarea id="f-detalle" name="detalle" rows="3" placeholder="Zonas con tensión, molestias, si es tu primera vez…"></textarea>
+          </div>
+          <div class="preview field--full" aria-live="polite">
+            <span class="preview__label">Así llegará tu mensaje</span>
+            <pre id="preview"></pre>
+          </div>
+          <button class="btn btn--gold btn--lg field--full" type="submit">Enviar por WhatsApp</button>
+        </form>
+      </div>
+    </section>
+    <!-- /SI:WHATSAPP -->
+
+    <!-- ================= CONTACTO ================= -->
+    <section class="section section--crema contacto" id="contacto">
+      <div class="wrap">
+        <header class="sec-head" data-reveal>
+          <p class="eyebrow">Dónde estoy</p>
+          <h2>Santiago Centro, o <em>en tu casa</em></h2>
+        </header>
+        <div class="contacto__grid">
+          <div class="contacto__info" data-reveal>
+            <!-- SI:DIRECCION -->
+            <div class="info"><span class="info__k">Dirección</span><p>%%DIRECCION%%</p></div>
+            <!-- /SI:DIRECCION -->
+            <!-- SI:WHATSAPP -->
+            <div class="info"><span class="info__k">WhatsApp</span><p><a href="%%WA_LINK%%" target="_blank" rel="noopener">%%WA_NUMERO%%</a></p></div>
+            <!-- /SI:WHATSAPP -->
+            <div class="info"><span class="info__k">Instagram</span><p><a href="https://www.instagram.com/%%INSTAGRAM%%/" target="_blank" rel="noopener">@%%INSTAGRAM%%</a></p></div>
+            <!-- SI:EMAIL -->
+            <div class="info"><span class="info__k">Correo</span><p><a href="mailto:%%EMAIL%%">%%EMAIL%%</a></p></div>
+            <!-- /SI:EMAIL -->
+            <!-- SI:HORARIO -->
+            <div class="info info--horario">
+              <span class="info__k">Horario</span>
+              <p class="estado" id="estado" aria-live="polite"></p>
+              <ul class="horario" id="horario"><!-- HORARIO_TABLA --></ul>
+            </div>
+            <!-- /SI:HORARIO -->
+            <div class="info"><span class="info__k">A domicilio</span><p>Consulta si llego a tu comuna escribiéndome por WhatsApp.</p></div>
+          </div>
+          <!-- SI:DIRECCION -->
+          <div class="mapa" data-reveal>
+            <div class="mapa__box" id="mapa" data-src="%%MAPA_URL%%">
+              <button class="btn btn--dark" type="button" id="mapaBtn">Ver mapa</button>
+            </div>
+            <a class="btn btn--line" href="%%COMO_LLEGAR%%" target="_blank" rel="noopener">Cómo llegar</a>
+          </div>
+          <!-- /SI:DIRECCION -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <div><span class="brand__a">%%MARCA_A%%</span> <span class="brand__b">%%MARCA_B%%</span><p>%%LEMA%% · %%CIUDAD%%</p></div>
+      <p class="foot__small">© %%ANIO%% %%NOMBRE%%. Página hecha por RunClick Webs.</p>
+    </div>
+  </footer>
+
+  <!-- SI:WHATSAPP -->
+  <a class="wa-float" href="%%WA_LINK%%" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5a9.5 9.5 0 0 0-8.1 14.4L2.6 21.4l4.6-1.2A9.5 9.5 0 1 0 12 2.5Z"/><path d="M8.6 7.9c-.4.9-.1 2.400 1.500 4.200 1.700 1.800 3.200 2.500 4.200 2.100l1-1-2.200-1.300-.9.800c-.8-.3-1.800-1.300-2.200-2.200l.8-.8-1.200-2.200-.8.400Z"/></svg>
+  </a>
+  <!-- /SI:WHATSAPP -->
+
+  <dialog class="modal" id="modal" aria-labelledby="m-nombre">
+    <button class="modal__x" type="button" id="mX" aria-label="Cerrar">×</button>
+    <div class="modal__media" id="mMedia"></div>
+    <div class="modal__body">
+      <span class="svc__cat" id="mCat"></span>
+      <h3 id="m-nombre"></h3>
+      <p id="mTxt"></p>
+      <p class="modal__price" id="mPrice"></p>
+      <!-- SI:WHATSAPP --><a class="btn btn--gold" id="mWa" href="#" target="_blank" rel="noopener">Reservar este masaje</a><!-- /SI:WHATSAPP -->
+    </div>
+  </dialog>
+
+  <!-- SI:FLYER_POPUP -->
+  <dialog class="modal modal--flyer" id="popup" aria-label="Promoción">
+    <button class="modal__x" type="button" id="pX" aria-label="Cerrar">×</button>
+    <a href="%%FLYER_WA%%" target="_blank" rel="noopener"><img src="%%FLYER_IMG%%" alt="%%FLYER_TITULO%%" width="640" height="800"></a>
+  </dialog>
+  <!-- /SI:FLYER_POPUP -->
+
+  <script id="sitio-datos" type="application/json">%%SITIO_JSON%%</script>
+  <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "nombre": "Jonny Carrero Masajes",
+  "marca_a": "Jonny Carrero",
+  "marca_b": "Masajes",
+  "lema": "Tu bienestar, mi prioridad",
+  "rubro": "Masajes de relajación y descarga muscular",
+  "schema_tipo": "HealthAndBeautyBusiness",
+  "seo_titulo": "Jonny Carrero Masajes · Masajes en Santiago Centro y a domicilio",
+  "seo_descripcion": "Masajes de relajación, descontracturantes y descarga muscular en Santiago Centro (Galería Santiago, piso 8) y a domicilio. Desde $15.000. Reserva por WhatsApp.",
+  "site_url": "",
+  "github_repo": "Bemol69/jonnymasaje",
+  "google_verificacion": "",
+  "colores": {
+    "tinta": "#2a1b12",
+    "nogal": "#5b3a22",
+    "dorado": "#b98a4b",
+    "dorado_claro": "#e2c48f",
+    "papel": "#f4ede2",
+    "crema": "#faf6ef",
+    "linea": "#dccfba",
+    "salvia": "#7b8a6c"
+  },
+  "fuentes": { "titulos": "Cormorant Garamond", "texto": "Jost" }
+}

@@ -1,0 +1,231 @@
+# Configuración del panel /admin (Sveltia CMS)
+# Cada cambio que se guarda aquí crea un commit en GitHub.
+# Vercel arma la web (scripts/build.mjs) y la publica en ~30 segundos.
+
+backend:
+  name: github
+  repo: %%GITHUB_REPO%%
+  branch: main
+  commit_messages:
+    create: "Web: crea {{collection}} «{{slug}}»"
+    update: "Web: actualiza {{collection}} «{{slug}}»"
+    delete: "Web: elimina {{collection}} «{{slug}}»"
+    uploadMedia: "Web: sube foto {{path}}"
+    deleteMedia: "Web: elimina foto {{path}}"
+
+site_url: %%SITE_URL%%
+display_url: %%SITE_URL%%
+logo_url: ../img/logo.jpg
+
+media_folder: img/servicios
+public_folder: /img/servicios
+
+# Nombres de archivo sin tildes ni ñ (ej: "Piedras calientes" -> piedras-calientes.json)
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+# Las fotos del celular se achican y convierten a WebP al subirlas, para que la web cargue rápido
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 80
+          width: 1200
+          height: 1200
+
+collections:
+  # ---------- MASAJES ----------
+  - name: servicios
+    label: Masajes
+    label_singular: masaje
+    description: "Los masajes que aparecen en la web (se muestran como máximo 10). Si no pones precio, la tarjeta dice «Cotizar por WhatsApp»."
+    icon: spa
+    folder: data/servicios
+    format: json
+    create: true
+    delete: true
+    identifier_field: nombre
+    slug: "{{nombre}}"
+    summary: "{{nombre}}"
+    sortable_fields:
+      fields: [orden, nombre]
+      default:
+        field: orden
+        direction: ascending
+    fields:
+      - name: nombre
+        label: Nombre del masaje
+        hint: "Ej: Masaje descontracturante"
+        widget: string
+      - name: categoria
+        label: Tipo
+        hint: "Sirve para los filtros de la web."
+        widget: select
+        options:%%CATEGORIAS_OPCIONES%%
+        default: relajacion
+      - name: precio
+        label: Precio desde (CLP)
+        hint: "Solo el número, sin puntos. Ej: 15000. Déjalo vacío si prefieres que consulten por WhatsApp."
+        widget: number
+        value_type: int
+        required: false
+      - name: duracion
+        label: Duración
+        hint: "Ej: 25 min. Déjalo vacío si no quieres mostrarlo."
+        widget: string
+        required: false
+      - name: texto
+        label: Descripción
+        hint: "Una o dos frases. Ej: Trabajo firme sobre espalda, cuello y hombros para deshacer contracturas."
+        widget: text
+      - name: portada
+        label: Foto de portada
+        hint: "Foto principal. Si no hay, se muestra un adorno dorado."
+        widget: image
+        required: false
+      - name: fotos
+        label: Más fotos
+        hint: "Fotos extra para la ficha."
+        widget: list
+        required: false
+        field: { name: foto, label: Foto, widget: image }
+      - name: etiqueta
+        label: Etiqueta (opcional)
+        hint: "Un detalle sobre la foto. Ej: Más pedido, Nuevo"
+        widget: string
+        required: false
+      - name: mensaje
+        label: Mensaje de WhatsApp (opcional)
+        hint: "Lo que aparece escrito al tocar «Reservar». Ej: Hola! Quiero info de Piedras calientes 👋"
+        widget: string
+        required: false
+      - name: destacado
+        label: ¿Destacado?
+        hint: "El primero destacado se muestra grande."
+        widget: boolean
+        default: false
+        required: false
+      - name: orden
+        label: Orden
+        hint: "Número más bajo = aparece antes."
+        widget: number
+        value_type: int
+        default: 10
+        required: false
+      - name: visible
+        label: ¿Mostrar en la web?
+        hint: "Apágalo para ocultarlo sin borrarlo."
+        widget: boolean
+        default: true
+        required: false
+
+  # ---------- DATOS GENERALES ----------
+  - name: ajustes
+    label: Datos del negocio
+    icon: settings
+    files:
+      - name: ajustes
+        label: Contacto, dirección, horario y portada
+        file: data/ajustes.json
+        fields:
+          - name: whatsapp
+            label: WhatsApp para reservas
+            hint: "Formato internacional, solo números. Ej: 56986007704"
+            widget: string
+            pattern: ["^569\\d{8}$", "Debe partir con 569 y tener 11 números, ej: 56986007704"]
+          - name: mensaje_whatsapp
+            label: Mensaje inicial de WhatsApp
+            hint: "Ej: Hola! Vi tu página y quiero reservar un masaje 👋"
+            widget: string
+          - name: instagram
+            label: Usuario de Instagram
+            hint: "Sin @. Ej: jonnycarrero.masajes"
+            widget: string
+          - name: email
+            label: Correo (opcional)
+            widget: string
+            required: false
+            pattern: ["^$|^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", "Escribe un correo válido, ej: contacto@gmail.com"]
+          - name: ciudad
+            label: Ciudad o sector
+            hint: "Ej: Santiago Centro"
+            widget: string
+          - name: region
+            label: Región
+            widget: string
+            required: false
+          - name: direccion
+            label: Dirección
+            hint: "Aparece en el mapa. Ej: Galería Santiago, piso 8, oficina 809, Santiago Centro. Si la dejas vacía, el mapa desaparece."
+            widget: string
+            required: false
+          - name: zonas
+            label: Zonas que atiendes
+            hint: "Ej: Santiago Centro, Providencia"
+            widget: list
+            required: false
+          - name: horario
+            label: Horario de atención
+            hint: "Agrega un día por línea. Con esto la web muestra «Abierto ahora / Cerrado». Si no agregas ninguno, no se muestra."
+            widget: list
+            required: false
+            fields:
+              - name: dia
+                label: Día
+                widget: select
+                options:%%DIAS_OPCIONES%%
+              - { name: cerrado, label: "¿Cerrado todo el día?", widget: boolean, default: false, required: false }
+              - { name: abre, label: "Abre", widget: string, required: false, hint: "Formato 24 h. Ej: 10:00", pattern: ["^$|^([01]?\\d|2[0-3]):[0-5]\\d$", "Escribe la hora como HH:MM, ej: 10:00"] }
+              - { name: cierra, label: "Cierra", widget: string, required: false, hint: "Ej: 20:00", pattern: ["^$|^([01]?\\d|2[0-3]):[0-5]\\d$", "Escribe la hora como HH:MM, ej: 20:00"] }
+              - { name: abre2, label: "Abre (segundo tramo)", widget: string, required: false, hint: "Solo si cierras a mediodía. Ej: 16:00", pattern: ["^$|^([01]?\\d|2[0-3]):[0-5]\\d$", "Escribe la hora como HH:MM"] }
+              - { name: cierra2, label: "Cierra (segundo tramo)", widget: string, required: false, hint: "Ej: 21:00", pattern: ["^$|^([01]?\\d|2[0-3]):[0-5]\\d$", "Escribe la hora como HH:MM"] }
+          - { name: hero_eyebrow, label: "Portada: etiqueta de arriba", widget: string, hint: "Ej: Santiago Centro · Galería Santiago, piso 8" }
+          - { name: hero_titulo, label: "Portada: título", widget: string, hint: "Ej: Tu bienestar," }
+          - { name: hero_destacado, label: "Portada: segunda línea (en dorado)", widget: string, hint: "Ej: mi prioridad." }
+          - { name: hero_bajada, label: "Portada: texto", widget: text }
+          - { name: sobre_titulo, label: "Sobre mí: título", widget: string }
+          - { name: sobre_texto, label: "Sobre mí: texto", widget: text }
+          - { name: frase, label: "Frase destacada", widget: string, hint: "Ej: El descanso no es negociable, es necesario." }
+          - { name: frase_texto, label: "Frase: texto de apoyo", widget: string, required: false }
+
+      - name: flyer
+        label: Flyer de promoción
+        file: data/flyer.json
+        fields:
+          - { name: mostrar, label: "¿Mostrar la sección de promoción?", widget: boolean, default: true }
+          - { name: popup, label: "¿Mostrarla también como ventana emergente (una vez por visita)?", widget: boolean, default: false }
+          - { name: imagen, label: Imagen del flyer, widget: image, hint: "Mejor vertical (como las de Instagram)." }
+          - { name: titulo, label: Título, widget: string }
+          - { name: texto, label: Texto, widget: string, required: false }
+          - { name: mensaje_whatsapp, label: Mensaje de WhatsApp, widget: string, required: false }
+
+      - name: sesion
+        label: Así es tu sesión (pasos)
+        file: data/sesion.json
+        fields:
+          - { name: titulo, label: Título, widget: string }
+          - { name: bajada, label: Texto, widget: string, required: false }
+          - name: pasos
+            label: Pasos
+            widget: list
+            fields:
+              - { name: titulo, label: Paso, widget: string, hint: "Ej: Reservas por WhatsApp" }
+              - { name: texto, label: Detalle, widget: string }
+
+      - name: testimonios
+        label: Opiniones de clientes
+        file: data/testimonios.json
+        fields:
+          - name: testimonios
+            label: Opiniones
+            hint: "Copia opiniones reales (WhatsApp, Google, Instagram) con permiso del cliente. La sección aparece cuando hay al menos una."
+            widget: list
+            required: false
+            fields:
+              - { name: texto, label: Opinión, widget: text }
+              - { name: nombre, label: Nombre, widget: string, hint: "Ej: Camila R." }
+              - { name: detalle, label: Detalle, widget: string, required: false, hint: "Ej: Masaje descontracturante" }
