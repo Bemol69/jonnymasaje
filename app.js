@@ -1,15 +1,14 @@
-// Solo interacción: menú, revelados, filtros, ficha de masaje, formulario a WhatsApp,
-// horario abierto/cerrado, mapa diferido y popup del flyer. Todo el contenido ya viene escrito en el HTML.
+// Solo interacción: menú, carta de masajes, reserva rápida y formulario a WhatsApp,
+// horario abierto/cerrado, mapa diferido y popup del flyer. El contenido ya viene escrito en el HTML.
 (() => {
   'use strict';
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   let SITIO = { whatsapp: '', nombre: '', horario: [], servicios: {} };
   try { SITIO = JSON.parse($('#sitio-datos').textContent); } catch { /* sin datos */ }
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const waUrl = (t) => `https://api.whatsapp.com/send?phone=${SITIO.whatsapp}&text=${encodeURIComponent(t)}`;
 
-  // ---------- Menú y barra ----------
+  // ---------- Menú ----------
   const nav = $('#nav');
   const burger = $('#burger');
   burger.addEventListener('click', () => {
@@ -17,71 +16,43 @@
     burger.setAttribute('aria-expanded', abierto);
   });
   $$('#menu a').forEach((a) => a.addEventListener('click', () => { nav.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false'); }));
-  const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 8);
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  // ---------- Títulos por palabra ----------
-  let n = 0;
-  function dividir(nodo) {
-    [...nodo.childNodes].forEach((c) => {
-      if (c.nodeType === 3) {
-        const frag = document.createDocumentFragment();
-        c.textContent.split(/(\s+)/).forEach((p) => {
-          if (!p) return;
-          if (/^\s+$/.test(p)) { frag.append(' '); return; }
-          const w = document.createElement('span'); w.className = 'w';
-          const i = document.createElement('span'); i.textContent = p; i.style.setProperty('--i', n++);
-          w.append(i); frag.append(w);
-        });
-        c.replaceWith(frag);
-      } else if (c.nodeType === 1) dividir(c);
+  // ---------- Carta de masajes ----------
+  const items = $$('.menu__item');
+  const vista = $('#vista');
+  const escritorio = matchMedia('(min-width: 960px)');
+  function mostrar(id) {
+    const s = SITIO.servicios[id]; if (!s || !vista) return;
+    const img = $('#vImg');
+    vista.classList.add('is-swap');
+    setTimeout(() => {
+      img.src = s.f[0] || 'img/logo.jpg'; img.alt = s.n;
+      $('#vNombre').textContent = s.n; $('#vTxt').textContent = s.t;
+      $('#vPrecio').textContent = s.p + (s.d ? ` · ${s.d}` : '');
+      const w = $('#vWa'); if (w) w.href = s.wa || '#';
+      vista.classList.remove('is-swap');
+    }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 180);
+  }
+  function elegir(item) {
+    const abrir = !item.classList.contains('is-on') || escritorio.matches;
+    items.forEach((i) => {
+      const on = i === item && abrir;
+      i.classList.toggle('is-on', on);
+      $('.menu__row', i).setAttribute('aria-expanded', on);
+      $('.menu__detail', i).hidden = !on;
     });
+    if (abrir) mostrar(item.dataset.id);
   }
-  $$('[data-words]').forEach((el) => { el.setAttribute('aria-label', el.textContent.trim()); n = 0; dividir(el); $$('.w', el).forEach((w) => w.setAttribute('aria-hidden', 'true')); });
+  items.forEach((i) => $('.menu__row', i).addEventListener('click', () => elegir(i)));
+  if (items[0]) mostrar(items[0].dataset.id);
 
-  // ---------- Revelados ----------
-  const objetivos = $$('[data-reveal], [data-words], .led, .hero__art');
-  if ('IntersectionObserver' in window && !reduce) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-    objetivos.forEach((el) => io.observe(el));
-  } else objetivos.forEach((el) => el.classList.add('is-in'));
-
-  // Parallax suave de los arcos del hero (solo transform)
-  const arte = $('.hero__art');
-  if (arte && !reduce && matchMedia('(min-width: 900px)').matches) {
-    const a = $('.arch--cabina', arte), o = $('.orb', arte);
-    let tick = false;
-    addEventListener('scroll', () => {
-      if (tick) return; tick = true;
-      requestAnimationFrame(() => { const y = Math.min(scrollY, 900); a.style.transform = `translateY(${y * -0.06}px)`; o.style.transform = `translateY(${y * 0.05}px)`; tick = false; });
-    }, { passive: true });
-  }
-
-  // ---------- Filtros ----------
-  const grid = $('#svcGrid');
-  $$('.chip').forEach((chip) => chip.addEventListener('click', () => {
-    const f = chip.dataset.filtro;
-    $$('.chip').forEach((c) => c.classList.toggle('is-on', c === chip));
-    grid.classList.toggle('is-filtered', f !== '*');
-    $$('.svc', grid).forEach((s) => { s.hidden = f !== '*' && s.dataset.cat !== f; if (!s.hidden) s.classList.add('is-in'); });
-  }));
-
-  // ---------- Ficha de masaje ----------
-  const modal = $('#modal');
-  const loto = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 10c6 8 8 16 0 28-8-12-6-20 0-28Z"/><path d="M32 38c-6-2-14-8-18-18 10 0 18 4 18 18Z"/><path d="M32 38c6-2 14-8 18-18-10 0-18 4-18 18Z"/><path d="M10 46c8 6 14 8 22 8s14-2 22-8"/></svg>';
-  function abrir(id) {
-    const s = SITIO.servicios[id]; if (!s) return;
-    $('#mCat').textContent = s.c; $('#m-nombre').textContent = s.n; $('#mTxt').textContent = s.t;
-    $('#mPrice').textContent = s.p + (s.d ? ` · ${s.d}` : '');
-    const m = $('#mMedia'); m.className = 'modal__media' + (s.f.length ? '' : ' is-orn');
-    m.innerHTML = s.f.length ? '' : loto;
-    if (s.f.length) { const img = new Image(); img.src = s.f[0]; img.alt = s.n; m.append(img); }
-    const w = $('#mWa'); if (w) w.href = s.wa || '#';
-    modal.showModal();
-  }
-  $$('[data-servicio]').forEach((b) => b.addEventListener('click', () => abrir(b.dataset.servicio)));
-  $('#mX').addEventListener('click', () => modal.close());
-  modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
+  // ---------- Reserva rápida ----------
+  const quick = $('#quick');
+  if (quick) quick.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const masaje = $('#q-masaje').value, modo = $('#q-modo').value;
+    window.open(waUrl(`Hola! Quiero reservar ${masaje} 👋\n\n📍 *Lugar:* ${modo}\n\n¿Qué horarios tienes disponibles?`), '_blank', 'noopener');
+  });
 
   // ---------- Formulario → WhatsApp ----------
   const form = $('#form');
@@ -96,7 +67,7 @@
       l.push(`📍 *Lugar:* ${modo.value || '…'}`);
       if (domicilio) l.push(`🏠 *Comuna:* ${v('#f-comuna') || '…'}`);
       if (v('#f-cuando')) l.push(`🗓️ *Día y hora:* ${v('#f-cuando')}`);
-      if (v('#f-detalle')) l.push(`📝 *Detalle:* ${v('#f-detalle')}`);
+      if (v('#f-detalle')) l.push(`📝 *Comentarios:* ${v('#f-detalle')}`);
       return l.join('\n');
     }
     const pintar = () => { comunaWrap.hidden = modo.value !== 'A domicilio'; $('#preview').textContent = mensaje().replace(/\*/g, ''); };
@@ -126,8 +97,8 @@
     function pintarEstado(d, min) {
       const hoy = tramosDe(d);
       const abierto = hoy.find(([a, b]) => min >= aMin(a) && min < aMin(b));
-      let txt, on = false;
-      if (abierto) { txt = `🟢 Abierto ahora · cierra a las ${corta(abierto[1])}`; on = true; }
+      let txt;
+      if (abierto) txt = `🟢 Abierto ahora · cierra a las ${corta(abierto[1])}`;
       else {
         const luego = hoy.find(([a]) => min < aMin(a));
         if (luego) txt = `🔴 Cerrado · abre hoy a las ${corta(luego[0])}`;
@@ -137,7 +108,7 @@
           txt = sig ? `🔴 Cerrado · abre ${sig[2] === 7 ? 'el próximo ' : 'el '}${DIAS[sig[0]]} a las ${corta(sig[1])}` : '🔴 Cerrado';
         }
       }
-      estado.textContent = txt; estado.classList.toggle('is-open', on);
+      estado.textContent = txt;
       $$('#horario li').forEach((li) => li.classList.toggle('is-today', +li.dataset.dia === d));
     }
     window.__estadoHorario = pintarEstado; // para pruebas: __estadoHorario(0, 600)

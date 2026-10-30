@@ -171,22 +171,19 @@ const loto = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 10c6 8 8 
 const precioTxt = (s) => (s.precio ? `Desde $${miles(s.precio)}` : 'Cotizar por WhatsApp');
 
 const servicioHtml = (s, i) => `
-        <article class="svc${i === 0 ? ' is-big' : ''}${i === servicios.length - 1 && i > 0 && (servicios.length + 1) % 3 === 2 ? ' is-wide' : ''}" data-cat="${esc(s.cat.id)}" data-reveal style="--d:${i * 70}ms">
-          <button type="button" class="svc__btn" data-servicio="${esc(s.id)}" aria-label="Ver detalle de ${esc(s.nombre)}">
-            <span class="svc__media${s.mini ? '' : ' is-orn'}">${s.mini
-    ? `<img src="${esc(s.mini)}"${s.srcset ? ` srcset="${esc(s.srcset)}" sizes="${s.sizes}"` : ''} alt="${esc(s.nombre)}" loading="${i < 3 ? 'eager' : 'lazy'}" decoding="async">`
-    : loto}${s.etiqueta ? `<span class="svc__tag">${esc(s.etiqueta)}</span>` : ''}</span>
-            <span class="svc__body">
-              <span class="svc__cat">${esc(s.cat.nombre)}</span>
-              <strong class="svc__name">${esc(s.nombre)}</strong>
-              <span class="svc__txt">${esc(s.texto)}</span>
-              <span class="svc__foot">
-                <span class="svc__price${s.precio ? '' : ' is-ask'}">${esc(precioTxt(s))}${s.duracion ? `<small>· ${esc(s.duracion)}</small>` : ''}</span>
-                <span class="svc__go">${flecha}</span>
-              </span>
-            </span>
+        <li class="menu__item${i === 0 ? ' is-on' : ''}" data-id="${esc(s.id)}">
+          <button type="button" class="menu__row" data-servicio="${esc(s.id)}" aria-expanded="${i === 0}" aria-controls="det-${esc(s.id)}">
+            <span class="menu__name">${esc(s.nombre)}</span>
+            <span class="menu__dur">${esc(s.duracion)}</span>
+            <span class="menu__price${s.precio ? '' : ' is-ask'}">${esc(s.precio ? `Desde $${miles(s.precio)}` : 'Cotizar')}</span>
+            <span class="menu__chev" aria-hidden="true"></span>
           </button>
-        </article>`;
+          <div class="menu__detail" id="det-${esc(s.id)}"${i === 0 ? '' : ' hidden'}>
+            <figure class="menu__fig"><img src="${esc(s.mini || 'img/logo.jpg')}" alt="${esc(s.nombre)}" width="480" height="360" loading="lazy" decoding="async"></figure>
+            <p>${esc(s.texto)}</p>
+            ${T.whatsapp ? `<a class="btn btn--dark" href="${esc(wa(s.mensaje))}" target="_blank" rel="noopener">Reservar este masaje</a>` : ''}
+          </div>
+        </li>`;
 
 const pasoHtml = (p, i) => `
           <li data-reveal style="--d:${i * 90}ms"><span class="step__n">${pad(i + 1)}</span><div><strong>${esc(p.titulo)}</strong><p>${esc(p.texto)}</p></div></li>`;
@@ -208,11 +205,12 @@ const marquee = [...servicios.map((s) => s.nombre), 'Tu bienestar, mi prioridad'
 // ---------- 3. Marcadores ----------
 const colores = config.colores || {};
 const fuentes = config.fuentes || {};
-const FUENTE_TITULOS = fuentes.titulos || 'Cormorant Garamond';
-const FUENTE_TEXTO = fuentes.texto || 'Jost';
+const FUENTE_TITULOS = fuentes.titulos || 'Bricolage Grotesque';
+const FUENTE_TEXTO = fuentes.texto || 'Hanken Grotesk';
 const fuenteParam = (f, pesos) => `family=${encodeURIComponent(f).replace(/%20/g, '+')}:${pesos}`;
 const SEO_TITULO = str(config.seo_titulo) || `${T.nombre} · ${T.rubro} en ${T.ciudad}`;
 const SEO_DESCRIPCION = str(config.seo_descripcion) || str(ajustes.hero_bajada);
+const precioMin = servicios.filter((s) => s.precio).sort((x, y) => x.precio - y.precio)[0];
 const flyerImg = rel(flyerData.imagen);
 const flyerOn = flyerData.mostrar !== false && flyerImg && existsSync(join(ROOT, flyerImg));
 const mapaQuery = encodeURIComponent(T.direccion);
@@ -235,7 +233,8 @@ const VARS = {
   FLYER_IMG: flyerOn ? await optimizar(flyerImg, 900) : '', FLYER_TITULO: str(flyerData.titulo), FLYER_TEXTO: str(flyerData.texto),
   FLYER_WA: T.whatsapp ? wa(str(flyerData.mensaje_whatsapp) || T.mensaje) : '#',
   N_SERVICIOS: String(servicios.length),
-  FUENTES_URL: `https://fonts.googleapis.com/css2?${fuenteParam(FUENTE_TITULOS, 'ital,wght@0,500;0,600;0,700;1,500;1,600')}&${fuenteParam(FUENTE_TEXTO, 'wght@300;400;500;600')}&display=swap`,
+  PRECIO_DESDE: precioMin ? `$${miles(precioMin.precio)}` : '', DURACION_DESDE: precioMin ? precioMin.duracion : '',
+  FUENTES_URL: `https://fonts.googleapis.com/css2?${fuenteParam(FUENTE_TITULOS, 'opsz,wght@12..96,500..800')}&${fuenteParam(FUENTE_TEXTO, 'wght@300;400;500;600')}&display=swap`,
   FUENTE_TITULOS, FUENTE_TEXTO,
   DIAS_OPCIONES: DIAS.map((d) => `
               - ${d}`).join(''),
@@ -321,12 +320,10 @@ const head = `<link rel="canonical" href="${SITE}/">
 // ---------- 5. dist/ ----------
 const BLOQUES = {
   '<!-- SERVICIOS -->': servicios.map(servicioHtml).join(''),
-  '<!-- FILTROS -->': filtrosHtml,
   '<!-- PASOS -->': pasos.map(pasoHtml).join(''),
   '<!-- TESTIMONIOS -->': testimonios.map(testimonioHtml).join(''),
   '<!-- SELECT_SERVICIOS -->': servicios.map((s) => `<option>${esc(s.nombre)}</option>`).join(''),
   '<!-- HORARIO_TABLA -->': horarioTabla,
-  '<!-- MARQUEE -->': [...marquee, ...marquee].map((c) => `<span>${esc(c)}</span>`).join(''),
 };
 let html = readFileSync(join(ROOT, 'index.html'), 'utf8');
 for (const marker of ['<!-- SEO:HEAD', ...Object.keys(BLOQUES)]) {

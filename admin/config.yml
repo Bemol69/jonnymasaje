@@ -183,9 +183,8 @@ collections:
               - { name: cierra, label: "Cierra", widget: string, required: false, hint: "Ej: 20:00", pattern: ["^$|^([01]?\\d|2[0-3]):[0-5]\\d$", "Escribe la hora como HH:MM, ej: 20:00"] }
               - { name: abre2, label: "Abre (segundo tramo)", widget: string, required: false, hint: "Solo si cierras a mediodía. Ej: 16:00", pattern: ["^$|^([01]?\\d|2[0-3]):[0-5]\\d$", "Escribe la hora como HH:MM"] }
               - { name: cierra2, label: "Cierra (segundo tramo)", widget: string, required: false, hint: "Ej: 21:00", pattern: ["^$|^([01]?\\d|2[0-3]):[0-5]\\d$", "Escribe la hora como HH:MM"] }
-          - { name: hero_eyebrow, label: "Portada: etiqueta de arriba", widget: string, hint: "Ej: Santiago Centro · Galería Santiago, piso 8" }
-          - { name: hero_titulo, label: "Portada: título", widget: string, hint: "Ej: Tu bienestar," }
-          - { name: hero_destacado, label: "Portada: segunda línea (en dorado)", widget: string, hint: "Ej: mi prioridad." }
+          - { name: hero_titulo, label: "Portada: título", widget: string, hint: "Ej: Masajes de relajación y descarga muscular" }
+          - { name: hero_destacado, label: "Portada: segunda línea", widget: string, hint: "Ej: en Santiago Centro y a domicilio." }
           - { name: hero_bajada, label: "Portada: texto", widget: text }
           - { name: sobre_titulo, label: "Sobre mí: título", widget: string }
           - { name: sobre_texto, label: "Sobre mí: texto", widget: text }

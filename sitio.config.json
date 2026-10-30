@@ -11,14 +11,17 @@
   "github_repo": "Bemol69/jonnymasaje",
   "google_verificacion": "",
   "colores": {
-    "tinta": "#2a1b12",
-    "nogal": "#5b3a22",
-    "dorado": "#b98a4b",
-    "dorado_claro": "#e2c48f",
-    "papel": "#f4ede2",
-    "crema": "#faf6ef",
-    "linea": "#dccfba",
-    "salvia": "#7b8a6c"
+    "tinta": "#1b1612",
+    "nogal": "#2b1b10",
+    "dorado": "#b9822f",
+    "dorado_claro": "#e3be7e",
+    "papel": "#f2f3ef",
+    "crema": "#fafaf7",
+    "linea": "#d8d9d2",
+    "salvia": "#4f5e4e"
   },
-  "fuentes": { "titulos": "Cormorant Garamond", "texto": "Jost" }
+  "fuentes": {
+    "titulos": "Bricolage Grotesque",
+    "texto": "Hanken Grotesk"
+  }
 }
